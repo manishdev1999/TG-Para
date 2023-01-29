@@ -8,6 +8,7 @@ from collections import Counter
 from nltk.corpus import stopwords
 from nltk.tokenize import word_tokenize
 from nltk.sentiment import SentimentIntensityAnalyzer
+from collections import Counter
 import pandas as py
 import nltk
 import ssl
@@ -39,21 +40,14 @@ def analyse_word_count(wordBaseCount: int, inputText: str):
 
 def analyse_conjunctions(inputParagraph: str, conjunctions):
     ssl._create_default_https_context = ssl._create_unverified_context
-    nltk.download()
+    nltk.download('stopwords')
     nltk.download('vader_lexicon')
     nltk.download('punkt')
     # Tokenize the paragraph into words
     words = word_tokenize(inputParagraph)
-
-    # Remove stop words
-    stop_words = set(stopwords.words("english"))
-    filtered_words = [word for word in words if word.lower() not in stop_words]
-
-    filtered_words = [
-        word for word in filtered_words if word.lower() in conjunctions]
-
-    result = dict(Counter(filtered_words))
-    return result
+    filtered_words = [word for word in words if word.lower()]
+    result = Counter(i for i in filtered_words if i in conjunctions)
+    return dict(result)
 
 
 # finds and gives the keyword for the given input paragraph by comparing the absolute relevancy and theme

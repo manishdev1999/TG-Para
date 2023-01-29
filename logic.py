@@ -12,10 +12,14 @@ def analyse_text_generate_dictonary(paragraph: str, settingData):
     wordCount = cf.word_count(paragraph)
     wordCountAcceptance = cf.analyse_word_count(
         settingData["baseCount"], paragraph)
-    conjuctionsCount = cf.analyse_conjunctions(
+    conjuctionsCountList = cf.analyse_conjunctions(
         paragraph, settingData["conjuction_list"])
-    print("conjuctionsCount", conjuctionsCount)
+    wordFrequencyInContext = cf.find_the_frequency_of_words_used(paragraph)
+    paraPharseTheme = cf.predict_the_topic_of_the_paragraph(paragraph)
     return {
         "wordCount": wordCount,
-        "wordCountAcceptance": wordCountAcceptance
+        "wordCountAcceptance": wordCountAcceptance,
+        "conjuctionsCountList": conjuctionsCountList,
+        "wordFrequency": wordFrequencyInContext,
+        "paraPharseTheme": paraPharseTheme
     }
